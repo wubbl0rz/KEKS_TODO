@@ -45,7 +45,7 @@
   class="fixed right-4 bottom-4 select-none pb-4 text-gray-100"
 >
   <Icon
-    class="select-none md:h-20 md:w-20 w-12 h-12 bg-pink-600 rounded-md"
+    class="select-none w-12 h-12 bg-pink-600 rounded-md"
     icon="heroicons-outline:plus-circle"
   />
 </div>
@@ -66,7 +66,7 @@
     }}
   >
     <Icon
-      class="select-none md:h-20 md:w-20 w-12 h-12 bg-pink-600 rounded-md"
+      class="select-none w-12 h-12 bg-pink-600 rounded-md"
       icon="heroicons-outline:search"
     />
   </div>
