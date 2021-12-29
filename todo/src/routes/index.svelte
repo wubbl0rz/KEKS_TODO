@@ -9,17 +9,17 @@
   let searchInput;
   let searchText = "";
 
+  $: percent =
+    ($todos.filter((e) => e.done).length / ($todos.length || 1)) * 100;
+
+  let searchActive = false;
+
   $: sortedTodos = $todos
     .sort((a, b) => new Date(b.created) - new Date(a.created))
     .sort((a, b) => a.done - b.done)
     .filter((t) =>
       t.text.toLocaleLowerCase().includes(searchText.toLocaleLowerCase())
     );
-
-  $: percent =
-    ($todos.filter((e) => e.done).length / ($todos.length || 1)) * 100;
-
-  let searchActive = false;
 
   function createTodo(text) {
     return {

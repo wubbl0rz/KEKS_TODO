@@ -10,6 +10,7 @@ function createTodoStore() {
     store.set(todos);
 
     store.subscribe(v => {
+      console.log("SUB");
       localStorage.setItem("todos", JSON.stringify(v));
     });
   }
