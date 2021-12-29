@@ -1,4 +1,4 @@
-# features
+# geplante features zum einbauen für twitch stream 
 
 - suche X
 - dark / light theme X
