@@ -3,6 +3,7 @@
 - suche X
 - dark / light theme X
 - hübsch machen (auslagern in components mit slots und events) <------------------
+- custom icon pro todo ? icon picker ?
 - gruppen ... bücher ?
 - todos liste sharen als link  (gzip ? base64 an url?)
 - delete all button

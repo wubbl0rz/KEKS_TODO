@@ -8,6 +8,7 @@
     "preview": "svelte-kit preview"
   },
   "devDependencies": {
+    "@iconify/svelte": "^2.1.0",
     "@sveltejs/adapter-auto": "next",
     "@sveltejs/kit": "next",
     "autoprefixer": "^10.4.0",
