@@ -5,8 +5,18 @@
 
   export let todo;
 
-  function removeTodo(id) {
-    $todos = $todos.filter((e) => e.id != id);
+  function toggleDeleted() {
+    todo.deleted = !todo.deleted;
+  }
+
+  function handleKey(e) {
+    if (e.key == "d" && e.altKey) {
+      todo.done = !todo.done;
+    }
+
+    if (todo.done && e.key == "Delete" && e.altKey) {
+      removeTodo(todo.id);
+    }
   }
 </script>
 
@@ -17,6 +27,7 @@
     type="checkbox"
   />
   <textarea
+    on:keydown={handleKey}
     class:line-through={todo.done}
     class:dark:bg-gray-400={todo.done}
     class:dark:bg-gray-900={!todo.done}
@@ -29,21 +40,13 @@
     bind:value={todo.text}
     type="text"
   />
-  <div on:click={removeTodo(todo.id)} class="select-none text-gray-100">
+
+  <div on:click={toggleDeleted} class="select-none text-gray-100">
     <Icon
-      class="h-8 w-8 transition hover:scale-125 
-    hover:text-pink-600 cursor-pointer"
-      icon="heroicons-outline:trash"
+      class="h-8 w-8 transition hover:scale-125 hover:text-pink-600 cursor-pointer"
+      icon={todo.deleted
+        ? "heroicons-outline:receipt-refund"
+        : "heroicons-outline:trash"}
     />
   </div>
 </div>
-
-<style>
-  .scrollbar-off {
-    -ms-overflow-style: none; /* Internet Explorer 10+ */
-    scrollbar-width: none; /* Firefox */
-  }
-  .scrollbar-off::-webkit-scrollbar {
-    display: none; /* Safari and Chrome */
-  }
-</style>
