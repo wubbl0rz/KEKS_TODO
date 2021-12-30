@@ -1,6 +1,9 @@
 import { browser, prerendering } from '$app/env';
 import { get, writable } from 'svelte/store';
 
+class TodoCollection extends Array {
+}
+
 function createTodoStore() {
 
   const store = writable([]);
@@ -10,13 +13,12 @@ function createTodoStore() {
     store.set(todos);
 
     store.subscribe(v => {
-      console.log("SUB");
       localStorage.setItem("todos", JSON.stringify(v));
     });
   }
 
   return {
-    ...store,
+    ...store
   };
 }
 

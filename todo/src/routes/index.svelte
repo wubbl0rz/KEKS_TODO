@@ -6,7 +6,14 @@
   import { v4 as uuidv4 } from "uuid";
   import Icon from "@iconify/svelte";
 
-  let searchInput;
+  function sortBy(key) {
+    return (a, b) => (a[key] > b[key] ? 1 : b[key] > a[key] ? -1 : 0);
+  }
+
+  function includesIgnoreCase(text, search) {
+    return text.toLocaleLowerCase().includes(search.toLocaleLowerCase());
+  }
+
   let searchText = "";
 
   $: percent =
@@ -15,11 +22,13 @@
   let searchActive = false;
 
   $: sortedTodos = $todos
-    .sort((a, b) => new Date(b.created) - new Date(a.created))
-    .sort((a, b) => a.done - b.done)
-    .filter((t) =>
-      t.text.toLocaleLowerCase().includes(searchText.toLocaleLowerCase())
-    );
+    .sort(sortBy("created"))
+    .sort(sortBy("done"))
+    .filter((t) => includesIgnoreCase(t.text, searchText));
+
+  $: {
+    todos.set($todos);
+  }
 
   function createTodo(text) {
     return {
@@ -38,38 +47,32 @@
 
 <BookList />
 
-<Progress value={percent} />
+<div class="flex gap-2 justify-around">
+  <div class="w-full">
+    <Progress value={percent} />
+  </div>
+  <div class="relative focus-within:text-blue-500 text-gray-400">
+    <input
+      class="rounded h-8 w-0 focus:w-64 duration-75 transition-all pt-1 placeholder:text-gray-400 text-gray-100 bg-slate-900 ring-0 outline-0 border-2"
+      bind:value={searchText}
+      placeholder="search..."
+      type="text"
+    />
+    <Icon
+      class="pointer-events-none absolute right-1.5 top-2"
+      icon="heroicons-outline:search"
+    />
+  </div>
+</div>
 
 <div
   on:click={addTodo}
   class="fixed right-4 bottom-4 select-none pb-4 text-gray-100"
 >
   <Icon
-    class="select-none md:h-20 md:w-20 w-12 h-12 bg-pink-600 rounded-md"
+    class="select-none w-12 h-12 bg-pink-600 rounded-md"
     icon="heroicons-outline:plus-circle"
   />
-</div>
-
-<div class="fixed right-20 bottom-4 select-none pb-4 text-gray-100">
-  <input
-    bind:value={searchText}
-    bind:this={searchInput}
-    class:opacity-0={!searchActive}
-    class:opacity-100={searchActive}
-    class="absolute shadow-md transition-all rounded-md right-0 bottom-20 ring-gray-600 ring-2 bg-gray-900 "
-    type="text"
-  />
-  <div
-    on:click={() => {
-      searchActive = !searchActive;
-      searchActive && searchInput.focus();
-    }}
-  >
-    <Icon
-      class="select-none md:h-20 md:w-20 w-12 h-12 bg-pink-600 rounded-md"
-      icon="heroicons-outline:search"
-    />
-  </div>
 </div>
 
 <ul class="pt-1">
